@@ -3,12 +3,14 @@
 #include <ctime>
 #include <SFML/Graphics.hpp>
 
+/* consts */
 #define ITOA_CHAR_BUFF_MAX 20
 #define WIN_WIDTH 1024
 #define WIN_HEIGHT 786
-#define TEXT_SIZE 48
+#define TEXT_SIZE 52
 #define REFRESH_FREQ 30.0 //fps
 
+/* funcs */
 void HandleInput(sf::RenderWindow* window);
 void RenderFrame(sf::RenderWindow* window, std::string const* buffer, sf::Font const* font);
 void RenderTextCentered(sf::RenderWindow* window, std::string const* buffer, sf::Font const* font);
@@ -17,12 +19,13 @@ std::string itoa(int num);
 std::string GetWords(int hours, int mins);
 std::string LookUpWord(int num);
 
+/* globals */
 bool running = true;
-
 
 int main() {
 
 	sf::RenderWindow window(sf::VideoMode(WIN_WIDTH, WIN_HEIGHT), "word clock", sf::Style::Fullscreen);
+	window.setMouseCursorVisible(false);
 	sf::Font font;
 	font.loadFromFile("ass/font.ttf");
 	std::string buffer;
@@ -55,13 +58,12 @@ void HandleInput(sf::RenderWindow* window) {
 
 		switch (event.type) {
 			
-			case (sf::Event::Closed):
+			case sf::Event::Closed:
+			case sf::Event::KeyPressed:
+			case sf::Event::MouseMoved:
+			case sf::Event::MouseButtonPressed:
 				running = false;
 				break;
-
-			case (sf::Event::KeyPressed):
-				if (event.key.code == sf::Keyboard::Q)
-					running = false;
 
 			default:
 				break;
